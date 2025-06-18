@@ -8,15 +8,15 @@
 
 本项目是一个集**AI简历自动筛选**与**就业数据可视化**为一体的多端应用，包含：
 
-- 前端（Vue3）实现可视化大屏与用户操作界面，支持“AI智能简历筛选”一键跳转。
-- 后端（.NET Core Web API）负责账号管理、数据服务、统计分析等RESTful接口。
-- AI简历智能筛选模块（Keras+Gradio）：自动识别岗位需求、OCR解析PDF简历，智能打分、排序与筛选候选人。
+- **前端（Vue3）**：实现可视化大屏与用户操作界面，支持“AI智能简历筛选”一键跳转。
+- **后端（.NET Core Web API）**：负责账号管理、数据服务、统计分析等RESTful接口。
+- **AI简历智能筛选模块（Keras+Gradio）**：自动识别岗位需求、OCR解析PDF简历，智能打分、排序与筛选候选人。
 
 ### 背景与行业痛点
 
-当前，招聘市场面临**简历信息失真**的严重问题，2024年LinkedIn数据表明，全球约34%的简历存在不同程度的造假行为，主要表现在学历史虚报、工作经历重叠、技能注水等方面【截图1】。传统的HR筛选方式由于工作量庞大且效率低，往往依赖于人工判断，识别准确率不足60%【截图2】。
+当前，招聘市场面临**简历个人与企业适配度不高**的严重问题，传统的HR筛选方式由于工作量庞大且效率低，往往依赖于人工判断，识别准确率不足60%。
 
-因此，智能简历筛选不仅能够解决信息失真问题，还能帮助HR提高筛选效率，减少人为偏差，提升招聘的准确性与公平性。
+因此，智能简历筛选可以帮助HR提高筛选效率，根据HR需要的简历数量快速从多份简历中筛选出相应数量的较为适合的简历供HR进行二轮筛选，大幅度减少需要筛选的简历数量，减少人为偏差，提升招聘的准确性与公平性。
 
 ---
 
@@ -24,16 +24,33 @@
 
 ```text
 project-root/
-├── back/                # 后端服务（.NET Core Web API 项目）
-│   └── ...              # 账号、数据、统计等接口代码
-├── project/             # 前端 Vue3 可视化与业务门户
-│   ├── src/
-│   └── package.json
-├── pythonusing/         # AI 模型与Gradio接口
-│   ├── Resume.csv           # 岗位描述与简历结构化数据
-│   ├── resume_api.py        # Gradio 智能筛选入口
+├── back/                # 后端服务（Java 项目）
+│   ├── src/             # 后端源代码
+│   │   └── main/        # 后端主目录
+│   │       └── java/    # Java 源代码
+│   │           └── com/
+│   │               └── example/
+│   │                   └── zwtcampuscareerview/
+│   │                       ├── config/               # 配置文件
+│   │                       ├── controllers/          # 控制器
+│   │                       ├── DTO/                  # 数据传输对象
+│   │                       ├── models/               # 模型类
+│   │                       ├── repositories/         # 数据库访问
+│   │                       ├── services/             # 业务逻辑
+│   │                       └── utils/                # 工具类
+│   ├── resources/        # 配置资源
+│   │   ├── mapper/       # SQL 映射
+│   │   │   └── JobTrendMapper.xml
+│   │   └── application.yml  # 配置文件
+│   └── target/           # 编译后的输出文件
+├── project/               # 前端服务（Vue 项目）
+│   ├── src/               # 前端源代码
+│   └── package.json       # 前端依赖配置文件
+├── pythonusing/           # AI 模型与Gradio接口
+│   ├── Resume.csv         # 岗位描述与简历结构化数据
+│   ├── resume_api.py      # Gradio 智能筛选入口
 │   └── resume_model_final.keras # 已训练好模型
-└── README.md            # 项目说明文档（当前文件）
+└── README.md              # 项目说明文档（当前文件）
 ```
 
 ---
@@ -51,9 +68,9 @@ project-root/
   npm install
   ```
 
-- 主要依赖【可参考`package.json`】：
+- 主要依赖【可参考project文件夹中的`package.json`】：
 
-  - Vue 3.x, Element-Plus, Axios, ECharts, Vue-Router, Vuex, 等
+  - Vue 3.x, Element-Plus, Axios, ECharts, Vue-Router, Vuex 等
   - 可选：`npm install -g @vue/cli` 安装全局 vue-cli
 
 ### 2. Python & AI依赖
@@ -92,7 +109,7 @@ cd back
 dotnet run
 ```
 
-默认端口可在项目配置文件中调整，具体接口详见`api帮助文档.pdf`  
+默认端口可在项目配置文件中调整，具体接口详见[API帮助文档](sandbox:/mnt/data/api帮助文档.pdf)  
 
 ---
 
@@ -116,7 +133,7 @@ npm run serve
 ```
 
 - 访问 `http://localhost:8080`
-- 推荐 Chrome/Edge/Firefox 等现代浏览器
+- 适合在 Chrome、Edge 或 Firefox 等现代浏览器中使用
 
 ---
 
@@ -172,8 +189,8 @@ npm run serve
 
 ## 作者与致谢
 
-> 本项目由Kaiwen Deng开发与维护。  
-> 如果对本项目有建议或合作需求，欢迎题问或邮件联系。 邮箱:dkw2266@smail.seig.edu.cn 
+> 本项目由Kaiven Deng开发与维护。  
+> 如果对本项目有建议或合作需求，欢迎提问或邮件联系：`dkw2266@smail.seig.edu.cn`  
 >
 > 感谢所有开源依赖与指导老师的支持！
 
@@ -182,4 +199,7 @@ npm run serve
 ## License
 
 本项目采用 MIT 开源协议。  
-详细内容请见 LICENSE 文件。
+详细内容请见 [LICENSE 文件](./LICENSE)。
+
+---
+
