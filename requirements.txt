@@ -1,0 +1,10 @@
+
+tensorflow>=2.0
+keras
+gradio
+easyocr
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn

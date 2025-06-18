@@ -1,0 +1,1668 @@
+<template>
+  <div class="body">
+    <div class="video-bg">
+      <video width="320" height="240" autoplay loop muted>
+        <source src="../assets/img/7btrrd.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div
+      :class="isBlack ? 'black-text' : 'white-text'"
+      class="dark-light"
+      @click="toggleTheme"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="3"
+        fill="red"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+      </svg>
+    </div>
+    <div class="app" style="height: 830px; width: 1050px">
+      <div class="header">
+        <div class="logo">
+          <!-- 可以留空，或者根据需要加入 -->
+        </div>
+        <div class="nav">
+          <router-link class="menu-link" to="/index">平台主页</router-link>
+          <router-link class="menu-link" to="/graduate-data"
+            >毕业生数据</router-link
+          >
+          <router-link class="menu-link notify is-active" to="/job-trend"
+            >就业趋势分析</router-link
+          >
+          <router-link class="menu-link" to="/feed-back">企业反馈</router-link>
+        </div>
+        <div class="search-box">
+          <input type="text" placeholder="搜索毕业生数据" />
+        </div>
+        <div class="header-right">
+          <div class="notification">
+            <span class="notification-number">3</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-bell"
+            >
+              <path
+                d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"
+              />
+            </svg>
+          </div>
+          <svg viewBox="0 0 512 512" fill="currentColor">
+            <path
+              d="M448.773 235.551A135.893 135.893 0 00451 211c0-74.443-60.557-135-135-135-47.52 0-91.567 25.313-115.766 65.537-32.666-10.59-66.182-6.049-93.794 12.979-27.612 19.013-44.092 49.116-45.425 82.031C24.716 253.788 0 290.497 0 331c0 7.031 1.703 13.887 3.006 20.537l.015.015C12.719 400.492 56.034 436 106 436h300c57.891 0 106-47.109 106-105 0-40.942-25.053-77.798-63.227-95.449z"
+            />
+          </svg>
+          <img
+            class="profile-img"
+            src="https://images.unsplash.com/photo-1600353068440-6361ef3a86e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+            alt=""
+          />
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="left-side">
+          <div class="side-wrapper">
+            <div class="side-title">数据模块</div>
+            <div class="side-menu">
+              <a>
+                <svg viewBox="0 0 512 512">
+                  <g xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <path
+                      d="M0 0h128v128H0zm0 0M192 0h128v128H192zm0 0M384 0h128v128H384zm0 0M0 192h128v128H0zm0 0"
+                      data-original="#bfc9d1"
+                    />
+                  </g>
+                  <path
+                    xmlns="http://www.w3.org/2000/svg"
+                    d="M192 192h128v128H192zm0 0"
+                    fill="currentColor"
+                    data-original="#82b1ff"
+                  />
+                  <path
+                    xmlns="http://www.w3.org/2000/svg"
+                    d="M384 192h128v128H384zm0 0M0 384h128v128H0zm0 0M192 384h128v128H192zm0 0M384 384h128v128H384zm0 0"
+                    fill="currentColor"
+                    data-original="#bfc9d1"
+                  />
+                </svg>
+                <div class="custom-form">
+                  <select
+                    id="month-select"
+                    v-model="form.month"
+                    class="select-input"
+                  >
+                    <option value="" disabled>年份切换</option>
+                    <option
+                      v-for="month in months"
+                      :key="month.value"
+                      :value="month.value"
+                    >
+                      {{ month.label }}
+                    </option>
+                  </select>
+                </div>
+              </a>
+              <a href="#">
+                <svg viewBox="0 0 488.932 488.932" fill="currentColor">
+                  <path
+                    d="M243.158 61.361v-57.6c0-3.2 4-4.9 6.7-2.9l118.4 87c2 1.5 2 4.4 0 5.9l-118.4 87c-2.7 2-6.7.2-6.7-2.9v-57.5c-87.8 1.4-158.1 76-152.1 165.4 5.1 76.8 67.7 139.1 144.5 144 81.4 5.2 150.6-53 163-129.9 2.3-14.3 14.7-24.7 29.2-24.7 17.9 0 31.8 15.9 29 33.5-17.4 109.7-118.5 192-235.7 178.9-98-11-176.7-89.4-187.8-187.4-14.7-128.2 84.9-237.4 209.9-238.8z"
+                  />
+                </svg>
+                技术需求跟踪
+              </a>
+            </div>
+          </div>
+          <div class="side-wrapper">
+            <div class="side-title">分类</div>
+            <div class="side-menu">
+              <a href="#" @click.prevent="showJobMatchChart">
+                <svg viewBox="0 0 512 512" fill="currentColor">
+                  <path
+                    d="M497 151H316c-8.401 0-15 6.599-15 15v300c0 8.401 6.599 15 15 15h181c8.401 0 15-6.599 15-15V166c0-8.401-6.599-15-15-15zm-76 270h-30c-8.401 0-15-6.599-15-15s6.599-15 15-15h30c8.401 0 15 6.599 15 15s-6.599 15-15 15zm0-180h-30c-8.401 0-15-6.599-15-15s6.599-15 15-15h30c8.401 0 15 6.599 15 15s-6.599 15-15 15z"
+                  />
+                  <path
+                    d="M15 331h196v60h-75c-8.291 0-15 6.709-15 15s6.709 15 15 15h135v-30h-30v-60h30V166c0-24.814 20.186-45 45-45h135V46c0-8.284-6.716-15-15-15H15C6.716 31 0 37.716 0 46v270c0 8.284 6.716 15 15 15z"
+                  />
+                </svg>
+                岗位对口分析
+              </a>
+              <a @click.prevent="showJobMatchChart3">
+                <svg viewBox="0 0 512 512" fill="currentColor">
+                  <path
+                    d="M0 331v112.295a14.996 14.996 0 007.559 13.023L106 512V391L0 331zM136 391v121l105-60V331zM271 331v121l105 60V391zM406 391v121l98.441-55.682A14.995 14.995 0 00512 443.296V331l-106 60zM391 241l-115.754 57.876L391 365.026l116.754-66.15zM262.709 1.583a15.006 15.006 0 00-13.418 0L140.246 57.876 256 124.026l115.754-66.151L262.709 1.583zM136 90v124.955l105 52.5V150zM121 241L4.246 298.876 121 365.026l115.754-66.15zM271 150v117.455l105-52.5V90z"
+                  />
+                </svg>
+                就业岗位分布图
+              </a>
+              <a href="#" @click.prevent="showJobMatchChart2">
+                <svg viewBox="0 0 58 58" fill="currentColor">
+                  <path
+                    d="M57 6H1a1 1 0 00-1 1v44a1 1 0 001 1h56a1 1 0 001-1V7a1 1 0 00-1-1zM10 50H2v-9h8v9zm0-11H2v-9h8v9zm0-11H2v-9h8v9zm0-11H2V8h8v9zm26.537 12.844l-11 7a1.007 1.007 0 01-1.018.033A1.001 1.001 0 0124 36V22a1.001 1.001 0 011.538-.844l11 7a1.003 1.003 0 01-.001 1.688zM56 50h-8v-9h8v9zm0-11h-8v-9h8v9zm0-11h-8v-9h8v9zm0-11h-8V8h8v9z"
+                  />
+                </svg>
+                企业级别与薪资分析
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="main-container">
+          <div v-if="isJobMatchChart === 2">
+            <div class="main-header">
+              <a class="menu-link-main" href="#">所有数据</a>
+              <div class="header-menu">
+                <a
+                  class="main-header-link is-active"
+                  href="#"
+                  @click.prevent="showQYChart1"
+                  >用人流向</a
+                >
+                <a
+                  class="main-header-link"
+                  href="#"
+                  @click.prevent="showQYChart2"
+                  >薪资待遇</a
+                >
+                <a
+                  class="main-header-link"
+                  href="#"
+                  @click.prevent="showQYChart3"
+                  >用户反馈</a
+                >
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <div class="main-header">
+              <a class="menu-link-main" href="#">所有数据</a>
+              <div class="header-menu">
+                <a class="main-header-link is-active" href="#">统计分析</a>
+                <a class="main-header-link" href="#">图表展示</a>
+                <a class="main-header-link" href="#">用户反馈</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 内容区域 -->
+          <div class="jchart">
+            <!-- 根据 isJobMatchChart 状态显示不同的图表 -->
+            <div v-if="isJobMatchChart === 1">
+              <!-- JobMatchChart 图表 -->
+              <Bar :data="jobMatchChartData" :options="jobMatchChartOptions" />
+            </div>
+            <div v-else-if="isJobMatchChart === 2">
+              <div v-if="isShowQYChartNub === 1">
+                <Bar
+                  :data="JYLXchartData"
+                  :options="JYLXchartOptions"
+                  style="height: 450px"
+                />
+              </div>
+              <div v-if="isShowQYChartNub === 2">
+                <Bar
+                  :data="XCDYchartData"
+                  :options="XCDYchartOptions"
+                  style="height: 450px"
+                />
+              </div>
+              <div v-if="isShowQYChartNub === 3">
+                <EmploymentMap :employmentData="employmentData" />
+              </div>
+            </div>
+            <div v-else-if="isJobMatchChart === 3">
+              <EmploymentMap :employmentData="employmentData" />
+            </div>
+            <div v-else>
+              <!-- 默认的 chartData 图表 -->
+              <div class="jchart1">
+                <h2 style="text-align: center">就业形式分布柱状图</h2>
+                <div v-if="isLoading" style="text-align: center">加载中...</div>
+                <div
+                  v-else-if="
+                    !chartData.datasets.length ||
+                    !chartData.datasets[0].data.length
+                  "
+                  style="text-align: center"
+                >
+                  暂无数据
+                </div>
+                <Bar v-else :data="chartData" :options="chartOptions" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import { onMounted, nextTick } from "vue";
+import * as echarts from "echarts";
+import ChinaJson from "../assets/China.json"; // 确保路径和大小写正确
+echarts.registerMap("china", ChinaJson);
+import axios from "axios";
+import { Bar } from "vue-chartjs";
+import {
+  Chart,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import EmploymentMap from "@/components/EmploymentMap.vue"; // 根据项目路径调整
+// 注册所需的 Chart.js 组件
+Chart.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
+
+export default {
+  name: "EmploymentBarChart",
+  components: {
+    EmploymentMap,
+    Bar,
+  },
+  data() {
+    return {
+      employmentData: [
+        { name: "北京市", value: 37 },
+        { name: "山西省", value: 2 },
+        { name: "吉林省", value: 2 },
+        { name: "黑龙江省", value: 2 },
+        { name: "上海市", value: 21 },
+        { name: "江苏省", value: 13 },
+        { name: "浙江省", value: 31 },
+        { name: "安徽省", value: 2 },
+        { name: "福建省", value: 9 },
+        { name: "江西省", value: 4 },
+        { name: "山东省", value: 6 },
+        { name: "河南省", value: 9 },
+        { name: "湖北省", value: 3 },
+        { name: "湖南省", value: 13 },
+        { name: "广东省", value: 2928 },
+        { name: "广西壮族自治区", value: 2 },
+        { name: "海南省", value: 10 },
+        { name: "重庆市", value: 5 },
+        { name: "四川省", value: 4 },
+        { name: "贵州省", value: 1 },
+        { name: "陕西省", value: 7 },
+        { name: "宁夏回族自治区", value: 3 },
+        { name: "香港特别行政区", value: 2 },
+        { name: "境外（不含港澳台）", value: 12 },
+      ],
+      // 控制图表切换的状态
+      isJobMatchChart: 0,
+      isShowQYChart: false,
+      isShowQYChartNub: 1,
+      form: {
+        month: "2023",
+      },
+      months: [
+        { label: "2023年", value: "2023" },
+        { label: "2022年", value: "2022" },
+        { label: "2021年", value: "2021" },
+        { label: "2020年", value: "2020" },
+        { label: "2019年", value: "2019" },
+      ],
+      labels: [
+        "签劳动合同形式就业",
+        "签就业协议形式就业",
+        "就业&升学其他录用形式就业",
+        "国家基层项目",
+        "地方基层项目",
+        "应征义务兵",
+        "自主创业",
+        "自由职业",
+        "境内升学",
+        "出国、出境（含升学、就业）",
+        "未就业待就业",
+        "不就业拟升学",
+        "其他暂不就业",
+      ],
+      initialDataValues: [
+        63.0, 5.7, 12.9, 0.2, 0.9, 0.8, 0.8, 5.5, 1.3, 0.7, 7.9, 0.1, 0.1,
+      ],
+      chartData: {
+        labels: [],
+        datasets: [
+          {
+            label: "就业比例 (%)",
+            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+            data: [],
+          },
+        ],
+      },
+
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: "就业形式分布",
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.parsed.y}%`;
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "百分比 (%)",
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "就业形式",
+            },
+          },
+        },
+      },
+      jobMatchChartData: {
+        labels: ["网络工程", "信息管理与信息系统", "本校平均"],
+        datasets: [
+          {
+            label: "岗业对口程度",
+            backgroundColor: ["#168aad", "#168aad", "#ffca3a"],
+            data: [65, 55, 67],
+            borderWidth: 1,
+          },
+        ],
+      },
+      jobMatchChartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: "y",
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: "岗业对口程度",
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.raw}%`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 100,
+            title: {
+              display: true,
+              text: "百分比 (%)",
+            },
+          },
+          y: {
+            title: {
+              display: true,
+            },
+          },
+        },
+      },
+      JYLXchartData: {
+        labels: [
+          "民营企业/个体",
+          "政府机构/科研或其他事业单位",
+          "国有企业",
+          "中外合资/外资/独资",
+          "民非组织",
+        ],
+        datasets: [
+          {
+            label: "用人单位流向",
+            backgroundColor: [
+              "#4CAF50",
+              "#AED581",
+              "#81C784",
+              "#66BB6A",
+              "#388E3C",
+            ], // 设置每个条形图的颜色
+            data: [77, 9, 8, 5, 1], // 对应的百分比数据
+            borderWidth: 1,
+          },
+        ],
+      },
+      JYLXchartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false, // 隐藏图例
+          },
+          title: {
+            display: true,
+            text: "毕业生的用人单位流向",
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.raw}%`;
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100, // 假设百分比上限为 100
+            title: {
+              display: true,
+              text: "百分比 (%)",
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "单位类型",
+            },
+          },
+        },
+      },
+      XCDYchartData: {
+        labels: [
+          "A.2000元及以下",
+          "B.2001-3000元",
+          "C.3001-4000元",
+          "D.4001-5000元",
+          "E.5001-6000元",
+          "F.6001-7000元",
+          "G.7001-8000元",
+          "H.8001-9000元",
+          "I.9001-10000元",
+          "J.1万-1.5万元",
+          "K.1.5万-2万元",
+          "L.2万元以上",
+        ],
+        datasets: [
+          {
+            label: "毕业生薪酬待遇分布",
+            backgroundColor: "#4CAF50",
+            data: [140, 115, 64, 422, 549, 396, 253, 92, 70, 17, 5, 3],
+            borderWidth: 1,
+          },
+        ],
+      },
+      XCDYchartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false, // 隐藏图例
+          },
+          title: {
+            display: true,
+            text: "毕业生薪酬待遇分布统计图",
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.raw} 人`;
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "人数",
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "薪酬范围 (元)",
+            },
+          },
+        },
+      },
+      isLoading: false,
+    };
+  },
+  mounted() {
+    this.initializeChart();
+    this.updateChartData(this.form.month); // 加载默认年份的数据
+  },
+  watch: {
+    "form.month": function (newYear) {
+      this.updateChartData(newYear); // 当年份更改时调用 updateChartData 方法
+    },
+  },
+  methods: {
+    initializeChart() {
+      // 初始化图表数据
+      this.chartData = {
+        labels: this.labels,
+        datasets: [
+          {
+            label: "就业比例 (%)",
+            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+            data: this.initialDataValues,
+          },
+        ],
+      };
+    },
+    async updateChartData(selectedYear) {
+      console.log("获取数据的年份:", selectedYear);
+      this.isLoading = true; // 开始加载
+      try {
+        const response = await axios.get(
+          `http://localhost:5185/api/jobtrendchart?year=${selectedYear}`
+        );
+        console.log("获取数据响应:", response.data);
+
+        if (Array.isArray(response.data)) {
+          if (response.data.length === this.labels.length) {
+            this.chartData.datasets[0].data = response.data;
+            console.log(
+              "更新 chartData.datasets[0].data 成功:",
+              this.chartData.datasets[0].data
+            );
+          } else {
+            console.error(
+              "数据长度与标签长度不匹配",
+              response.data.length,
+              this.labels.length
+            );
+            this.chartData.datasets[0].data = [];
+          }
+        } else {
+          console.error("API 返回的数据格式不正确", response.data);
+          this.chartData.datasets[0].data = [];
+        }
+      } catch (error) {
+        console.error("获取数据失败:", error);
+        this.chartData.datasets[0].data = [];
+      } finally {
+        this.isLoading = false; // 结束加载
+      }
+    },
+    async updateJobMatchChartData(category) {
+      console.log("获取岗位对口数据的类别:", category);
+      this.isLoading = true; // 开始加载
+      try {
+        const response = await axios.get(
+          `http://localhost:5185/api/Data2/GetAlternativeChartData?category=${category}`
+        );
+        console.log("岗位对口数据响应:", response.data);
+
+        if (Array.isArray(response.data) && response.data.length === 3) {
+          // 确保返回的数据长度为 3，符合图表需求
+          this.jobMatchChartData.datasets[0].data = response.data;
+          console.log(
+            "更新 jobMatchChartData 成功:",
+            this.jobMatchChartData.datasets[0].data
+          );
+          this.$forceUpdate(); // 强制重新渲染
+        } else {
+          console.error("数据长度不符合预期", response.data.length);
+          this.jobMatchChartData.datasets[0].data = [0, 0, 0]; // 置空或默认值
+        }
+      } catch (error) {
+        console.error("获取岗位对口数据失败:", error);
+        this.jobMatchChartData.datasets[0].data = [0, 0, 0];
+      } finally {
+        this.isLoading = false; // 结束加载
+      }
+    },
+
+    showJobMatchChart() {
+      this.isJobMatchChart = 1; // 切换图表显示状态
+    },
+
+    showJobMatchChart2() {
+      this.isJobMatchChart = 2; // 切换图表显示状态
+    },
+    showJobMatchChart3() {
+      this.isJobMatchChart = 3; // 切换图表显示状态
+    },
+
+    showQYChart1() {
+      this.isShowQYChartNub = 1; // 切换图表显示状态
+    },
+    showQYChart2() {
+      this.isShowQYChartNub = 2; // 切换图表显示状态
+    },
+    showQYChart3() {
+      this.isShowQYChartNub = 3; // 切换图表显示状态
+    },
+    toggleTheme() {
+      this.isLightMode = !this.isLightMode;
+      document.body.classList.toggle("light-mode");
+    },
+    toggleColor() {
+      this.isBlack = !this.isBlack;
+    },
+  },
+};
+</script>
+
+
+
+
+  
+  <style lang="less" >
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+.jchart1 {
+  width: 100%;
+  height: 500px; /* 根据需要调整高度 */
+}
+.select-input {
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 1px;
+  background-color: transparent;
+  // color: var(--theme-color);
+  font-size: 14px;
+  font-weight: 500;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bbb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #3a6df0;
+    box-shadow: 0 0 0 2px rgba(40, 110, 150);
+  }
+
+  option {
+    background-color: white;
+    color: black;
+  }
+}
+
+/* 定义 LESS 的函数，用来动态生成颜色 */
+@black-color: black;
+@white-color: white;
+
+.setTextColor(@color) {
+  color: @color;
+}
+
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+@dark-color: #333;
+@light-color: #fff;
+
+.set-color(@mode) {
+  color: if(@mode = "light", @light-color, @dark-color);
+}
+
+:root {
+  --dropdown-bg: #21242d;
+  --theme-bg-color: rgba(16 18 27 / 40%);
+  --border-color: rgba(0, 0, 0, 0.25);
+  --theme-color: #f9fafb;
+  --inactive-color: rgb(113 119 144 / 78%);
+  --body-font: "Poppins", sans-serif;
+  --hover-menu-bg: rgba(12 15 25 / 30%);
+  --content-title-color: #999ba5;
+  --content-bg: rgb(146 151 179 / 13%);
+  --button-inactive: rgb(249 250 251 / 55%);
+  --dropdown-bg: #21242d;
+  --dropdown-hover: rgb(42 46 60);
+  --popup-bg: rgb(22 25 37);
+  --search-bg: #14162b;
+  --overlay-bg: rgba(36, 39, 59, 0.3);
+  --scrollbar-bg: rgb(1 2 3 / 40%);
+}
+
+.light-mode {
+  --theme-bg-color: rgb(255 255 255 / 31%);
+  --theme-color: #3c3a3a;
+  --inactive-color: #333333;
+  --button-inactive: #3c3a3a;
+  --search-bg: rgb(255 255 255 / 31%);
+  --dropdown-bg: #080707;
+  --overlay-bg: rgb(255 255 255 / 30%);
+  --dropdown-hover: rgb(236 236 236);
+  --border-color: rgba(0, 0, 0, 0.35);
+  --popup-bg: rgb(12, 11, 11);
+  --hover-menu-bg: rgba(255 255 255 / 35%);
+  --scrollbar-bg: rgb(255 253 253 / 57%);
+  --content-title-color: --theme-color;
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--body-font);
+  background-image: url(https://wallpapershome.com/images/wallpapers/macos-big-sur-1280x720-dark-wwdc-2020-22655.jpg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em;
+  width: 100%;
+  height: 100vh;
+
+  // 强制设置颜色为黑色
+  .black-text {
+    color: black !important; // 加上 !important 优先级
+  }
+
+  .white-text {
+    color: white !important; // 加上 !important 优先级
+  }
+}
+
+body.light-mode {
+  .black-text {
+    color: black !important;
+  }
+
+  .white-text {
+    color: white !important;
+  }
+}
+// body.light-mode {
+//   /* 定义两个 class，分别调用 LESS 函数来设置颜色 */
+// .black-text {
+//   .setTextColor(@black-color);  /* 黑色字体 */
+// }
+
+// .white-text {
+//   .setTextColor(@white-color);  /* 白色字体 */
+// }
+
+// color: black !important;  /* 增加 !important 确保优先级 */ /* 切换为light-mode时字体变为黑色 */
+//   background-color: #040404; /* 背景变为白色（可选） */
+// }
+.video-bg {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+.dark-light {
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+  //  background-color: var(--dropdown-bg);
+  box-shadow: -1px 3px 8px -1px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 50%;
+  z-index: 3;
+  cursor: pointer;
+  svg {
+    width: 24px;
+    flex-shrink: 0;
+    fill: #ffce45;
+    stroke: #ffce45;
+    transition: 0.5s;
+  }
+}
+
+.light-mode {
+  .dark-light svg {
+    color: white;
+    fill: transparent;
+    //  stroke: var(--theme-color);
+    stroke: #080707;
+  }
+  .profile-img {
+    border: 2px solid var(--theme-bg-color);
+  }
+  .content-section ul {
+    background-color: var(--theme-bg-color);
+  }
+  .pop-up__title {
+    border-color: var(--theme-color);
+  }
+  .dropdown.is-active ul {
+    background-color: rgb(255 255 255 / 94%);
+  }
+}
+
+body.light-mode:before,
+body.light-mode .video-bg:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgb(255 255 255 / 45%) 100%
+  );
+  backdrop-filter: saturate(3);
+}
+
+.app {
+  background-color: var(--theme-bg-color);
+  height: 830px;
+  width: 1050px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 15px;
+  font-weight: 500;
+
+  margin: 0 auto;
+  background-color: var(--theme-bg-color);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+
+  top: -30px;
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 84px;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 30px;
+  white-space: nowrap;
+  @media screen and (max-width: 480px) {
+    padding: 0 16px;
+  }
+  .logo {
+    background-image: url("../assets/img/Mylogo.png");
+    background-position: center;
+    background-size: contain; /* 等比例缩放并完全展示图片 */
+    background-repeat: no-repeat;
+    width: 934px; /* 设置元素宽度 */
+    height: 60px; /* 设置元素高度 */
+    opacity: 0.8; /* 设置透明度，值为0到1之间，1为完全不透明 */
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+
+    // 对 `a` 标签的样式
+    a {
+      padding: 20px 30px;
+      text-decoration: none;
+      color: var(--inactive-color); // 默认使用 inactive 颜色
+      border-bottom: 2px solid transparent;
+      transition: 0.3s;
+
+      // 媒体查询，最大宽度为 610px 时隐藏部分链接
+      @media screen and (max-width: 610px) {
+        &:not(.main-header-link) {
+          display: none;
+        }
+      }
+
+      // 设置活跃状态和悬停状态的样式
+      &.is-active,
+      &:hover {
+        color: var(--theme-color); // 在 hover 和 active 状态下使用主题颜色
+        border-bottom: 2px solid var(--theme-color); // 边框使用主题颜色
+      }
+    }
+  }
+}
+
+.notify {
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    background-color: #3a6df0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    right: 20px;
+    top: 16px;
+  }
+  @media screen and (max-width: 1055px) {
+    display: none;
+  }
+}
+
+.menu-circle {
+  width: 15px;
+  height: 15px;
+  background-color: #f96057;
+  border-radius: 50%;
+  box-shadow: 24px 0 0 0 #f8ce52, 48px 0 0 0 #5fcf65;
+  margin-right: 195px;
+  flex-shrink: 0;
+  @media screen and (max-width: 945px) {
+    display: none;
+  }
+}
+
+.search-box {
+  height: 40px;
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  padding-left: 16px;
+  border-radius: 4px;
+  input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: var(--search-bg);
+    border-radius: 4px;
+    font-family: var(--body-font);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 20px 0 40px;
+    box-shadow: 0 0 0 2px rgb(134 140 160 / 2%);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56.966 56.966' fill='%23717790c7'%3e%3cpath d='M55.146 51.887L41.588 37.786A22.926 22.926 0 0046.984 23c0-12.682-10.318-23-23-23s-23 10.318-23 23 10.318 23 23 23c4.761 0 9.298-1.436 13.177-4.162l13.661 14.208c.571.593 1.339.92 2.162.92.779 0 1.518-.297 2.079-.837a3.004 3.004 0 00.083-4.242zM23.984 6c9.374 0 17 7.626 17 17s-7.626 17-17 17-17-7.626-17-17 7.626-17 17-17z'/%3e%3c/svg%3e");
+    background-size: 14px;
+    background-repeat: no-repeat;
+    background-position: 16px 48%;
+    color: var(--theme-color);
+    &::placeholder {
+      font-family: var(--body-font);
+      color: var(--inactive-color);
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 40px;
+  margin-left: auto;
+  flex-shrink: 0;
+  svg {
+    width: 22px;
+    color: #f9fafb;
+
+    flex-shrink: 0;
+  }
+}
+
+.notification {
+  position: relative;
+  &-number {
+    position: absolute;
+    background-color: #3a6df0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    right: -6px;
+    top: -6px;
+  }
+  & + svg {
+    margin-left: 22px;
+    @media screen and (max-width: 945px) {
+      display: none;
+    }
+  }
+}
+
+.profile-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--theme-color);
+  margin-left: 22px;
+}
+
+.wide {
+  .header-menu,
+  .header-profile {
+    display: none;
+  }
+  .search-bar {
+    max-width: 600px;
+    margin: auto;
+    transition: 0.4s;
+    box-shadow: 0 0 0 1px var(--border-color);
+    padding-left: 0;
+  }
+  .menu-circle {
+    margin-right: 0;
+  }
+}
+
+.container {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.left-side {
+  flex-basis: 240px;
+  border-right: 1px solid var(--border-color);
+  padding: 26px;
+  overflow: auto;
+  flex-shrink: 0;
+  @media screen and (max-width: 945px) {
+    display: none;
+  }
+}
+
+.side-wrapper + .side-wrapper {
+  margin-top: 20px;
+}
+
+.side-title {
+  color: var(--inactive-color);
+  margin-bottom: 14px;
+}
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  a {
+    text-decoration: none;
+    color: var(--theme-color);
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: 0.3s;
+    &:hover {
+      background-color: var(--hover-menu-bg);
+    }
+  }
+  svg {
+    width: 16px;
+    margin-right: 8px;
+  }
+}
+
+.updates {
+  position: relative;
+  top: 0;
+  right: 0;
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  height: 58px;
+  flex-shrink: 0;
+  .header-menu {
+    margin-left: 50px;
+    @media screen and (max-width: 1055px) {
+      margin: auto;
+    }
+    a {
+      padding: 20px 24px;
+    }
+  }
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.menu-link-main {
+  position: relative;
+  top: -10px;
+  text-decoration: none;
+  color: var(--theme-color);
+  padding: 0 30px;
+  @media screen and (max-width: 1055px) {
+    display: none;
+  }
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  color: var(--theme-color);
+  padding: 20px 40px;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--theme-bg-color);
+  @media screen and (max-width: 510px) {
+    padding: 20px;
+  }
+  &-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    background-image: url("https://www.transparenttextures.com/patterns/cubes.png"),
+      linear-gradient(
+        to right top,
+        #cf4af3,
+        #e73bd7,
+        #f631bc,
+        #fd31a2,
+        #ff3a8b,
+        #ff4b78,
+        #ff5e68,
+        #ff705c,
+        #ff8c51,
+        #ffaa49,
+        #ffc848,
+        #ffe652
+      );
+    border-radius: 14px;
+    padding: 20px 40px;
+    @media screen and (max-width: 415px) {
+      padding: 20px;
+    }
+  }
+  &.overlay {
+    pointer-events: none;
+    transition: 0.3s;
+    background-color: var(--overlay-bg);
+  }
+}
+
+.overlay-app {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: all;
+  background-color: rgba(36, 39, 59, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  &.is-active {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.img-content {
+  font-weight: 500;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  svg {
+    width: 28px;
+    margin-right: 14px;
+  }
+}
+
+.content-text {
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 16px;
+  line-height: 1.7em;
+  color: #ebecec;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content-wrapper-context {
+  max-width: 350px;
+}
+
+.content-button {
+  background-color: #3a6df0;
+  border: none;
+  padding: 8px 26px;
+  color: #fff;
+  border-radius: 20px;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.content-wrapper-img {
+  width: 186px;
+  object-fit: cover;
+  margin-top: -25px;
+  object-position: center;
+  @media screen and (max-width: 570px) {
+    width: 110px;
+  }
+}
+
+.content-section {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  &-title {
+    color: var(--content-title-color);
+    margin-bottom: 14px;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-around;
+    background-color: var(--content-bg);
+    padding-left: 0;
+    margin: 0;
+    border-radius: 14px;
+    border: 1px solid var(--theme-bg-color);
+    cursor: pointer;
+    li {
+      list-style: none;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      width: 100%;
+      height: 100%;
+      white-space: nowrap;
+      transition: 0.3s;
+      &:hover {
+        background-color: var(--theme-bg-color);
+        &:first-child {
+          border-radius: 13px 13px 0 0;
+        }
+        &:last-child {
+          border-radius: 0 0 13px 13px;
+        }
+      }
+      & + li {
+        border-top: 1px solid var(--border-color);
+      }
+    }
+    svg {
+      width: 28px;
+      border-radius: 6px;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.products {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  @media screen and (max-width: 480px) {
+    width: 120px;
+  }
+}
+.status {
+  margin-left: auto;
+  width: 140px;
+  font-size: 15px;
+  position: relative;
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+  &-circle {
+    width: 6px;
+    height: 6px;
+    background-color: #396df0;
+    position: absolute;
+    border-radius: 50%;
+    top: 4px;
+    left: -20px;
+    &.green {
+      background-color: #3bf083;
+    }
+  }
+  &-button {
+    font-size: 15px;
+    margin-top: 0;
+    padding: 6px 24px;
+    @media screen and (max-width: 390px) {
+      padding: 6px 14px;
+    }
+    &.open {
+      background: none;
+      color: var(--button-inactive);
+      border: 1px solid var(--button-inactive);
+    }
+    &:not(.open):hover {
+      color: #fff;
+      border-color: #fff;
+    }
+  }
+}
+
+.content-button:not(.open):hover {
+  background: #1e59f1;
+}
+
+.menu {
+  width: 5px;
+  height: 5px;
+  background-color: var(--button-inactive);
+  border-radius: 50%;
+  box-shadow: 7px 0 0 0 var(--button-inactive),
+    14px 0 0 0 var(--button-inactive);
+  margin: 0 12px;
+}
+
+@media screen and (max-width: 415px) {
+  .adobe-product .menu {
+    display: none;
+  }
+}
+
+.dropdown {
+  position: relative;
+  height: 53px;
+  width: 40px;
+  top: -24px;
+  display: flex;
+  left: -5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  ul {
+    position: absolute;
+    background: var(--dropdown-bg);
+    height: 110px;
+    width: 120px;
+    right: 0;
+    top: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translatey(10px);
+    transition: all 0.4s ease;
+    li a {
+      text-decoration: none;
+      color: var(--theme-color);
+      font-size: 12px;
+    }
+  }
+}
+
+.dropdown.is-active {
+  ul {
+    opacity: 1;
+    pointer-events: all;
+    transform: translatey(25px);
+    li:hover {
+      background-color: var(--dropdown-hover);
+    }
+  }
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 187px;
+  margin-left: auto;
+  @media screen and (max-width: 480px) {
+    width: auto;
+  }
+}
+
+.pop-up {
+  position: absolute;
+  padding: 30px 40px;
+  top: 50%;
+  left: 50%;
+  transform: (translate(-50%, -50%));
+  overflow-y: auto;
+  box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s;
+  z-index: 10;
+  background-color: var(--popup-bg);
+  width: 500px;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  white-space: normal;
+  @media screen and (max-width: 570px) {
+    width: 100%;
+  }
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+  &__title {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__subtitle {
+    white-space: normal;
+    margin: 20px 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.8em;
+    a {
+      color: var(--theme-color);
+    }
+  }
+}
+
+.content-button-wrapper .content-button.status-button.open.close {
+  width: auto;
+}
+
+.content-section .close {
+  margin-right: 0;
+  width: 24px;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  & + .checkbox-wrapper {
+    margin: 20px 0 40px;
+  }
+}
+
+.checkbox {
+  display: none;
+}
+
+.checkbox + label {
+  display: flex;
+  align-items: center;
+  &:before {
+    content: "";
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--theme-color);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+}
+
+.checkbox:checked + label:before {
+  background-color: #3a6df0;
+  border-color: #3a6df0;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3e%3cpath d='M20 6L9 17l-5-5'/%3e%3c/svg%3e");
+  background-position: 50%;
+  background-size: 12px;
+  background-repeat: no-repeat;
+}
+
+.content-button-wrapper {
+  margin-top: auto;
+  margin-left: auto;
+  .open {
+    margin-right: 8px;
+  }
+}
+
+.apps-card {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: calc(100% + 20px);
+}
+
+.app-card {
+  display: flex;
+  flex-direction: column;
+  width: calc(33.3% - 20px);
+  font-size: 16px;
+  background-color: var(--content-bg);
+  border-radius: 14px;
+  border: 1px solid var(--theme-bg-color);
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
+    background-color: var(--theme-bg-color);
+  }
+  svg {
+    width: 28px;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  & + .app-card {
+    margin-left: 20px;
+  }
+  span {
+    display: flex;
+    align-items: center;
+  }
+  &__subtext {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6em;
+    margin-top: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+  }
+  &-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-top: 16px;
+  }
+  @media screen and (max-width: 1110px) {
+    width: calc(50% - 20px);
+    &:last-child {
+      margin-top: 20px;
+      margin-left: 0px;
+    }
+  }
+  @media screen and (max-width: 565px) {
+    width: calc(100% - 20px);
+    margin-top: 20px;
+    & + .app-card {
+      margin-left: 0;
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-bg);
+  border-radius: 10px;
+}
+.jchart {
+  position: relative; /* 设为相对定位以便后续绝对定位 */
+  width: 50%; /* 根据需要设置宽度 */
+  height: 400px; /* 设置固定高度或使用百分比 */
+  overflow: hidden; /* 超出部分隐藏 */
+  left: 50px; /* 如果需要位置调整 */
+  overflow: visible; /* 改为 visible 以允许内容溢出 */
+}
+
+.jchart > * {
+  position: absolute; /* 改为绝对定位 */
+  top: 0; /* 绝对定位到顶部 */
+  left: 0; /* 绝对定位到左边 */
+  right: 0; /* 保持右边界 */
+  bottom: 0; /* 保持下边界 */
+  max-width: 100%; /* 限制最大宽度 */
+  max-height: 100%; /* 限制最大高度 */
+  width: auto; /* 宽度自动 */
+  height: auto; /* 高度自动 */
+  object-fit: contain; /* 确保图像或元素按比例缩放 */
+  transform: none; /* 移除缩放 */
+}
+</style>
+  

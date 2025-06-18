@@ -1,0 +1,45 @@
+server:
+  port: 5185
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zwt_campus_career_view?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+    redis:
+      connection:
+        host: localhost
+        port: 6379
+        timeout: 6000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 3422965463@qq.com
+    password: ypajcwmxxodadcbb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+jwt:
+  secret: your_jwt_secret
+  expiration: 86400000 # JWT ????24???
+
+logging:
+  level:
+    root: INFO
+    com.example.zwtcampuscareerview: DEBUG
